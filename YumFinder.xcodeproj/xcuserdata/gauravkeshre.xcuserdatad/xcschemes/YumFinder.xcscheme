@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E2C9233B19D0184100124860"
-               BuildableName = "YumFinder.app"
+               BuildableName = "Yumfinder.app"
                BlueprintName = "YumFinder"
                ReferencedContainer = "container:YumFinder.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2C9233B19D0184100124860"
-            BuildableName = "YumFinder.app"
+            BuildableName = "Yumfinder.app"
             BlueprintName = "YumFinder"
             ReferencedContainer = "container:YumFinder.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2C9233B19D0184100124860"
-            BuildableName = "YumFinder.app"
+            BuildableName = "Yumfinder.app"
             BlueprintName = "YumFinder"
             ReferencedContainer = "container:YumFinder.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2C9233B19D0184100124860"
-            BuildableName = "YumFinder.app"
+            BuildableName = "Yumfinder.app"
             BlueprintName = "YumFinder"
             ReferencedContainer = "container:YumFinder.xcodeproj">
          </BuildableReference>

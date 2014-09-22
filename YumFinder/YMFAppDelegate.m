@@ -2,17 +2,18 @@
 //  YMFAppDelegate.m
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 9/22/14.
+//  Created by Summer Green on 9/22/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
 #import "YMFAppDelegate.h"
+#import "YMFAppearanceManager.h"
 
 @implementation YMFAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [YMFAppearanceManager applyAppearance];
     return YES;
 }
 							

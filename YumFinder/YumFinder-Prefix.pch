@@ -11,6 +11,28 @@
 #endif
 
 #ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
+
+#import "US_MacroConstants.h"
+#import "US_StringConstants.h"
+#import "NLSocialConstants.h"
+#import "APIConstants.h"
+
+#import "NLSActivityViewHUD.h"
+
+#import "Toast+UIView.h"
+#import "UIColor+AppTheme.h"
+#import "CMPopTipView+DMOS.h"
+#import "UIView+SmartHighlight.h"
+#import "UIStoryboard+convenience.h"
+
+#import "NLSDataReceiverDelegate.h"
+
+#import "BZFoursquare.h"
 #endif
+
+//#define TitleTextForFailed @"You failed 3 attempts. You are no longer able to take this test. Please wait to be contacted by your supervisor."
+#define IS_NULL(obj) ((obj == nil) || ([obj isEqual:[NSNull null]]))
+#define DEGREES_TO_RADIANS(x) (M_PI * x / 180.0)
