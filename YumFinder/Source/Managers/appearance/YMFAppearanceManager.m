@@ -16,5 +16,15 @@
     [[UITextField appearance] setBackground:textFieldBackground];
     [[UITextField appearance] setBorderStyle:UITextBorderStyleNone];
     
+    
+    /*
+     * SVProgressView
+     */
+    
+    [SVProgressHUD setBackgroundColor:[UIColor darkGrayColor]];
+    [SVProgressHUD setFont:APP_FONT(APP_FONT_SIZE)];
+    [SVProgressHUD setForegroundColor:[UIColor whiteColor]];
+
+    
 }
 @end

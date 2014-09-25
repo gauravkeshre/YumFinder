@@ -17,4 +17,13 @@
 +(instancetype)foursquarParamsWithQuery:(NSString *)query andLL:(NSString *)latLng;
 
 -(NSString *)stringWithCommaSeperatedLatLong;
+
+
+/*
+ * Location Dictionary
+ */
+
+-(NSDictionary *)latLong;
+
+
 @end

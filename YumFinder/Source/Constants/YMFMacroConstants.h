@@ -6,6 +6,11 @@
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
+typedef void (^YMF_SuccessCallback)  (id result);
+typedef void (^YMF_FailureCallback)  (NSString *error_code, NSString *message);
+typedef void (^YMF_ProgressCallback) (CGFloat progress);
+
+
 #define kNumberOfBubbleFrames 35
 #define usKEYBAORD_DISMISS_DURATION 0.25
 #define APP_FONT_NAME @"Helvetica Neue"

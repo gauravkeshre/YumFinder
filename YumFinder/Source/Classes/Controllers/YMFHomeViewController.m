@@ -11,11 +11,13 @@
 #import "YMFFSquareResultManager.h"
 
 @interface YMFHomeViewController ()<UITextFieldDelegate>
+{
+}
 @property (weak, nonatomic) IBOutlet UIButton *btnLeftArrow;
 @property (weak, nonatomic) IBOutlet UITextField *txtCuisine;
 @property (weak, nonatomic) IBOutlet UITextField *txtRange;
 @property (weak, nonatomic) IBOutlet UIButton *btnRightArrow;
-
+@property (strong, nonatomic)YMFFSquareResultManager *fsResultManager;
 - (IBAction)handleLeftArrow:(id)sender;
 - (IBAction)handleRightArrow:(id)sender;
 - (IBAction)handleLeftSwipe:(UISwipeGestureRecognizer *)sender;
@@ -27,17 +29,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     // Do any additional setup after loading the view.
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
     leftView.backgroundColor = [UIColor clearColor];
     
+    UIView *leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
+    leftView2.backgroundColor = [UIColor clearColor];
+    
     self.txtCuisine.leftViewMode = UITextFieldViewModeAlways;
     self.txtRange.leftViewMode = UITextFieldViewModeAlways;
     
-//    self.txtCuisine.leftView =leftView;
-    self.txtRange.leftView = leftView;
+    self.txtCuisine.leftView =leftView;
+    self.txtRange.leftView = leftView2;
+    leftView = nil;
+    leftView2= nil;
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -69,13 +79,24 @@
 -(void)searchAction:(id)sender{
     if (![self validateInputeAndReact:YES]) return;
     
+    YMFHomeViewController *__weak _weakSelf = self;
     [SVProgressHUD showWithStatus:msgPleaseWait maskType:SVProgressHUDMaskTypeGradient];
     
-    YMFHomeViewController *__weak _weakSelf = self;
+    
+    if (self.fsResultManager ==nil) {
+        self.fsResultManager = [YMFFSquareResultManager new];
+    }
+    
     [YMFAPIManager startSearchForRestaurantsThatServe:self.txtCuisine.text
                                                within:[self.txtRange.text floatValue]
                                          onCompletion:^(id result) {
                                              [SVProgressHUD showSuccessWithStatus:@"Got a list of restaurants"];
+                                             [SVProgressHUD showSuccessWithStatus:@"Parsing the list"];
+
+                                             [_weakSelf.fsResultManager parseResultFromArray:result onSuccess:^(id result) {
+                                                 NSLog(@"%@",result);
+                                             }];
+                                             
                                              NSLog(@"%@", result);
                                          } onFailure:^(NSString *error_code, NSString *message) {
                                              [SVProgressHUD showErrorWithStatus:message];

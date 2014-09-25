@@ -12,9 +12,6 @@
 //required and optional method
 @end
 
-typedef void (^YMF_SuccessCallback)  (id result);
-typedef void (^YMF_FailureCallback)  (NSString *error_code, NSString *message);
-typedef void (^YMF_ProgressCallback) (CGFloat progress);
 
 @interface YMFAPIManager : NSObject <BZFoursquareRequestDelegate, BZFoursquareSessionDelegate>
 

@@ -1,5 +1,5 @@
 //
-//  YMFFSquareResultManager.h
+//  YMFBaseVO.h
 //  YumFinder
 //
 //  Created by Gaurav Keshre on 9/25/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YMFFSquareResultManager : NSObject
+@interface YMFBaseVO : NSObject
 
--(void)parseResultFromArray:(NSArray *)array onSuccess:(YMF_SuccessCallback)callback;
++(instancetype)initWithDictionary:(NSDictionary *)d;
 @end

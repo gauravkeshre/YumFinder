@@ -23,6 +23,11 @@
 		E2814B0419D159070087782A /* YMFSearchLandingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E2814B0319D159070087782A /* YMFSearchLandingVC.m */; };
 		E2814B0719D1E3A90087782A /* sampleSquare_498px.png in Resources */ = {isa = PBXBuildFile; fileRef = E2814B0619D1E3A90087782A /* sampleSquare_498px.png */; };
 		E2A1821119D0A13D007D2C6C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2A1821019D0A13D007D2C6C /* Media.xcassets */; };
+		E2AADB7419D4815700E9B943 /* YMFFSRestaurantVO.m in Sources */ = {isa = PBXBuildFile; fileRef = E2AADB7319D4815700E9B943 /* YMFFSRestaurantVO.m */; };
+		E2AADB7719D4817800E9B943 /* YMFFSAddressVO.m in Sources */ = {isa = PBXBuildFile; fileRef = E2AADB7619D4817800E9B943 /* YMFFSAddressVO.m */; };
+		E2AADB7A19D4865C00E9B943 /* YMFFSLocationVO.m in Sources */ = {isa = PBXBuildFile; fileRef = E2AADB7919D4865C00E9B943 /* YMFFSLocationVO.m */; };
+		E2AADB7D19D4872000E9B943 /* YMFFSVenueCategoryVO.m in Sources */ = {isa = PBXBuildFile; fileRef = E2AADB7C19D4872000E9B943 /* YMFFSVenueCategoryVO.m */; };
+		E2AADB8119D48B6E00E9B943 /* YMFBaseVO.m in Sources */ = {isa = PBXBuildFile; fileRef = E2AADB8019D48B6E00E9B943 /* YMFBaseVO.m */; };
 		E2C9234019D0184100124860 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C9233F19D0184100124860 /* Foundation.framework */; };
 		E2C9234219D0184100124860 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C9234119D0184100124860 /* CoreGraphics.framework */; };
 		E2C9234419D0184100124860 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C9234319D0184100124860 /* UIKit.framework */; };
@@ -129,6 +134,16 @@
 		E2814B0319D159070087782A /* YMFSearchLandingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMFSearchLandingVC.m; sourceTree = "<group>"; };
 		E2814B0619D1E3A90087782A /* sampleSquare_498px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleSquare_498px.png; sourceTree = "<group>"; };
 		E2A1821019D0A13D007D2C6C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		E2AADB7219D4815700E9B943 /* YMFFSRestaurantVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMFFSRestaurantVO.h; path = "Four square/YMFFSRestaurantVO.h"; sourceTree = "<group>"; };
+		E2AADB7319D4815700E9B943 /* YMFFSRestaurantVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMFFSRestaurantVO.m; path = "Four square/YMFFSRestaurantVO.m"; sourceTree = "<group>"; };
+		E2AADB7519D4817800E9B943 /* YMFFSAddressVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMFFSAddressVO.h; path = "Four square/YMFFSAddressVO.h"; sourceTree = "<group>"; };
+		E2AADB7619D4817800E9B943 /* YMFFSAddressVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMFFSAddressVO.m; path = "Four square/YMFFSAddressVO.m"; sourceTree = "<group>"; };
+		E2AADB7819D4865C00E9B943 /* YMFFSLocationVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMFFSLocationVO.h; path = "Four square/YMFFSLocationVO.h"; sourceTree = "<group>"; };
+		E2AADB7919D4865C00E9B943 /* YMFFSLocationVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMFFSLocationVO.m; path = "Four square/YMFFSLocationVO.m"; sourceTree = "<group>"; };
+		E2AADB7B19D4872000E9B943 /* YMFFSVenueCategoryVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMFFSVenueCategoryVO.h; path = "Four square/YMFFSVenueCategoryVO.h"; sourceTree = "<group>"; };
+		E2AADB7C19D4872000E9B943 /* YMFFSVenueCategoryVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMFFSVenueCategoryVO.m; path = "Four square/YMFFSVenueCategoryVO.m"; sourceTree = "<group>"; };
+		E2AADB7F19D48B6E00E9B943 /* YMFBaseVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMFBaseVO.h; sourceTree = "<group>"; };
+		E2AADB8019D48B6E00E9B943 /* YMFBaseVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMFBaseVO.m; sourceTree = "<group>"; };
 		E2C9233C19D0184100124860 /* Yumfinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yumfinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C9233F19D0184100124860 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E2C9234119D0184100124860 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -355,6 +370,15 @@
 				E2814B0619D1E3A90087782A /* sampleSquare_498px.png */,
 			);
 			path = Temp;
+			sourceTree = "<group>";
+		};
+		E2AADB7E19D48B6300E9B943 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				E2AADB7F19D48B6E00E9B943 /* YMFBaseVO.h */,
+				E2AADB8019D48B6E00E9B943 /* YMFBaseVO.m */,
+			);
+			name = Base;
 			sourceTree = "<group>";
 		};
 		E2C9233319D0184100124860 = {
@@ -855,6 +879,15 @@
 		E2C9242B19D03AFD00124860 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2AADB7E19D48B6300E9B943 /* Base */,
+				E2AADB7219D4815700E9B943 /* YMFFSRestaurantVO.h */,
+				E2AADB7319D4815700E9B943 /* YMFFSRestaurantVO.m */,
+				E2AADB7519D4817800E9B943 /* YMFFSAddressVO.h */,
+				E2AADB7619D4817800E9B943 /* YMFFSAddressVO.m */,
+				E2AADB7819D4865C00E9B943 /* YMFFSLocationVO.h */,
+				E2AADB7919D4865C00E9B943 /* YMFFSLocationVO.m */,
+				E2AADB7B19D4872000E9B943 /* YMFFSVenueCategoryVO.h */,
+				E2AADB7C19D4872000E9B943 /* YMFFSVenueCategoryVO.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1061,6 +1094,7 @@
 				E2C9241D19D02C6800124860 /* DMOS_BaseManagedObject.m in Sources */,
 				E2C9240119D02C6800124860 /* CAMediaTimingFunction+AdditionalEquations.m in Sources */,
 				E264593419D3501700EDA300 /* InstagramModel.m in Sources */,
+				E2AADB7719D4817800E9B943 /* YMFFSAddressVO.m in Sources */,
 				E2C9243719D04B7300124860 /* YMFInstructionsTVC.m in Sources */,
 				E2E06A5919D085A70008C176 /* UIAlertView+AFNetworking.m in Sources */,
 				E2E06A5619D085A70008C176 /* AFURLSessionManager.m in Sources */,
@@ -1081,6 +1115,7 @@
 				E2C9243219D0411600124860 /* YMFAppearanceManager.m in Sources */,
 				E2E06A5219D085A70008C176 /* AFSecurityPolicy.m in Sources */,
 				E264592F19D3501700EDA300 /* InstagramEngine.m in Sources */,
+				E2AADB7A19D4865C00E9B943 /* YMFFSLocationVO.m in Sources */,
 				E2C923FD19D02C6800124860 /* NSString+Validator.m in Sources */,
 				E2E06A5819D085A70008C176 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				E2C9240819D02C6800124860 /* YMFStringConstants.m in Sources */,
@@ -1096,6 +1131,7 @@
 				E264593619D3501700EDA300 /* InstagramTag.m in Sources */,
 				E2C9240C19D02C6800124860 /* CMPopTipView+DMOS.m in Sources */,
 				E264593719D3501700EDA300 /* InstagramUser.m in Sources */,
+				E2AADB8119D48B6E00E9B943 /* YMFBaseVO.m in Sources */,
 				E264591119D3463000EDA300 /* SVProgressHUD.m in Sources */,
 				E2C9241E19D02C6800124860 /* SWCoreDataStack.m in Sources */,
 				E264593219D3501700EDA300 /* InstagramComment.m in Sources */,
@@ -1104,11 +1140,13 @@
 				E2C9235019D0184200124860 /* YMFAppDelegate.m in Sources */,
 				E2C923FE19D02C6800124860 /* UIView+SmartHighlight.m in Sources */,
 				E2C9241319D02C6800124860 /* NSDate-Utilities.m in Sources */,
+				E2AADB7419D4815700E9B943 /* YMFFSRestaurantVO.m in Sources */,
 				E2C9241019D02C6800124860 /* SWAppLaunchManager.m in Sources */,
 				E2E06A5419D085A70008C176 /* AFURLRequestSerialization.m in Sources */,
 				E2C9241819D02C6800124860 /* DMOS_CoreDataManager.m in Sources */,
 				E2E06A5E19D085A70008C176 /* UIWebView+AFNetworking.m in Sources */,
 				E2E06A5519D085A70008C176 /* AFURLResponseSerialization.m in Sources */,
+				E2AADB7D19D4872000E9B943 /* YMFFSVenueCategoryVO.m in Sources */,
 				E264593319D3501700EDA300 /* InstagramMedia.m in Sources */,
 				E2E06A5A19D085A70008C176 /* UIButton+AFNetworking.m in Sources */,
 				E2C9240E19D02C6800124860 /* NLSActivityViewHUD.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "YMFAPIManager.h"
 #import "NLSLocationManager.h"
+#define kTEMP_URL @"http://www.json-generator.com/api/json/get/bOGPbRQyIy?indent=2"
 
 @interface YMFAPIManager(){
     NLSLocationManager *locationManager;
@@ -62,7 +63,7 @@
 }
 
 #pragma mark - Private Methods
--(void)startSearchForRestaurantsThatServe:(NSString *)cuisine
+-(void)_startSearchForRestaurantsThatServe:(NSString *)cuisine
                                    within:(CGFloat)diameter
                              onCompletion:(YMF_SuccessCallback)successCallback
                                 onFailure:(YMF_FailureCallback)failureCallback{
@@ -83,6 +84,20 @@
                                                                         delegate:_weakSelf];
         [request start];
     }];
+}
+//
+-(void)startSearchForRestaurantsThatServe:(NSString *)cuisine
+                                    within:(CGFloat)diameter
+                              onCompletion:(YMF_SuccessCallback)successCallback
+                                onFailure:(YMF_FailureCallback)failureCallback{
+    self.successCallback = nil;
+    self.failureCallback = nil;
+    
+    [self session_invokeURL:kTEMP_URL
+                 withParams:nil
+                   callback:successCallback
+            failureCallback:failureCallback];
+    
 }
 
 
@@ -125,6 +140,49 @@
          NSString *strCode = [NSString stringWithFormat:@"%li", (long)error.code];
         self.failureCallback(strCode, error.localizedDescription);
     }
+}
+#pragma mark - NSURLSession Methods
+-(void) session_invokeURL:(NSString *)serviceURL
+               withParams:(NSDictionary *)params
+                 callback:(YMF_SuccessCallback)callback
+                 failureCallback:(YMF_FailureCallback)failureCallback{
+    
+
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+
+    NSLog(@"URL: %@", serviceURL);
+    NSURL *url = [NSURL URLWithString:serviceURL];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    if (params) {
+    NSMutableString *strParams = [[NSMutableString alloc]init];
+    for (NSString *key in [params allKeys]) {
+        [strParams appendFormat:@"%@=%@", key, params[key]];
+        [strParams appendString:@"&"];
+    }
+    [strParams deleteCharactersInRange:NSMakeRange([strParams length]-1, 1)];
+    [urlRequest setHTTPBody:[strParams dataUsingEncoding:NSUTF8StringEncoding]];
+    [urlRequest setHTTPMethod:@"POST"];
+    }else{
+            [urlRequest setHTTPMethod:@"GET"];
+    }
+
+    //    [urlRequest addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:urlRequest
+                                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                       if(error){
+                                                           failureCallback(@"500",[error userInfo][@"NSLocalizedDescription"]);
+                                                           return;
+                                                       }
+                                                       NSMutableDictionary *responsDic = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error]];
+                                                           callback(responsDic[@"response"][@"venues"]);
+                                                   }];
+    [task resume];
+    //    self.dataTask = task;
+    //    [self.dataTask resume];
+    //    NSLog(@"dataTask resumed: %@", self.dataTask);
 }
 
 @end
