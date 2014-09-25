@@ -40,15 +40,6 @@
                         <constraint firstAttribute="height" constant="100" id="oWX-LV-IAh"/>
                     </constraints>
                 </imageView>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FTm-gD-LZK" customClass="SWWobbleView">
-                    <rect key="frame" x="130" y="197" width="60" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="60" id="PJQ-30-9kF"/>
-                        <constraint firstAttribute="height" constant="60" id="QQR-5K-p5w"/>
-                    </constraints>
-                </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to reload" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VVq-0T-p94">
                     <rect key="frame" x="60" y="310" width="200" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -74,19 +65,17 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="3Xt-eh-3MA" firstAttribute="leading" secondItem="FTm-gD-LZK" secondAttribute="trailing" constant="-80" id="92v-Pb-kGu"/>
                 <constraint firstAttribute="trailing" secondItem="nBT-P4-BeT" secondAttribute="trailing" constant="100" id="FDd-DX-rLR"/>
                 <constraint firstItem="Ckr-WK-zE4" firstAttribute="top" secondItem="MUc-cv-exE" secondAttribute="top" id="I8z-3t-yJJ"/>
                 <constraint firstItem="sNT-ZR-VhX" firstAttribute="top" secondItem="nBT-P4-BeT" secondAttribute="bottom" constant="-13" id="Iw8-wH-mKJ"/>
                 <constraint firstItem="Ckr-WK-zE4" firstAttribute="leading" secondItem="MUc-cv-exE" secondAttribute="leading" id="KT6-gj-odV"/>
                 <constraint firstItem="3Xt-eh-3MA" firstAttribute="leading" secondItem="MUc-cv-exE" secondAttribute="leading" constant="110" id="LFP-m6-0Ws"/>
+                <constraint firstItem="sNT-ZR-VhX" firstAttribute="top" secondItem="3Xt-eh-3MA" secondAttribute="bottom" constant="18" id="NZh-WW-SLJ"/>
                 <constraint firstAttribute="bottom" secondItem="Ckr-WK-zE4" secondAttribute="bottom" id="PDP-7N-lYX"/>
                 <constraint firstAttribute="centerX" secondItem="sNT-ZR-VhX" secondAttribute="centerX" id="eS1-GS-mbe"/>
                 <constraint firstAttribute="centerY" secondItem="3Xt-eh-3MA" secondAttribute="centerY" constant="41" id="fXT-hk-iZS"/>
-                <constraint firstItem="FTm-gD-LZK" firstAttribute="top" secondItem="3Xt-eh-3MA" secondAttribute="bottom" constant="-52" id="k0d-YC-xfx"/>
                 <constraint firstAttribute="trailing" secondItem="Ckr-WK-zE4" secondAttribute="trailing" id="kOM-zG-QrQ"/>
                 <constraint firstItem="VVq-0T-p94" firstAttribute="top" secondItem="sNT-ZR-VhX" secondAttribute="bottom" constant="15" id="kxz-Ng-zol"/>
-                <constraint firstItem="sNT-ZR-VhX" firstAttribute="top" secondItem="FTm-gD-LZK" secondAttribute="bottom" constant="10" id="uGW-Zz-y9P"/>
                 <constraint firstAttribute="centerX" secondItem="VVq-0T-p94" secondAttribute="centerX" id="zT3-TZ-Dhc"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -97,7 +86,6 @@
                 <outlet property="icon" destination="3Xt-eh-3MA" id="Lun-zE-vSh"/>
                 <outlet property="lblTapToReload" destination="VVq-0T-p94" id="cIm-bZ-pfd"/>
                 <outlet property="titleLabel" destination="sNT-ZR-VhX" id="9Qd-IB-6vo"/>
-                <outlet property="wobbleView" destination="FTm-gD-LZK" id="UF2-az-ZIH"/>
             </connections>
         </view>
     </objects>

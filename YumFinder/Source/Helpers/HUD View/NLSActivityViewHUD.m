@@ -31,7 +31,8 @@
 }
 
 +(instancetype)activityOnView:(UIView *)view{
-    NSArray *subviewArray = [[NSBundle mainBundle] loadNibNamed:@"SWActivityView" owner:self options:nil];
+    NSString *nibName = NSStringFromClass([self class]);
+    NSArray *subviewArray = [[NSBundle mainBundle] loadNibNamed:nibName owner:self options:nil];
     for (UIView *subv in view.subviews) {
         if ([subv isKindOfClass:[self class]]) {
             [subv removeFromSuperview];
@@ -167,7 +168,7 @@
 -(NSArray *)imagesForAnimation{
     NSMutableArray *arr = [NSMutableArray arrayWithCapacity:kTOTAL_FRAMES];
     for (NSInteger i=1; i<=kTOTAL_FRAMES; i++) {
-        [arr addObject:[UIImage imageNamed:[NSString stringWithFormat:@"speakle-load-%li.png", (long)i]]];
+//        [arr addObject:[UIImage imageNamed:[NSString stringWithFormat:@"speakle-load-%li.png", (long)i]]];
     }
     return arr;
 }
