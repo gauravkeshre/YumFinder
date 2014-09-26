@@ -176,7 +176,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YumFinder/Source/Classes/Controllers/YMFHomeViewController.m"
@@ -189,13 +189,13 @@
             landmarkType = "5">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "__38-[YMFHomeViewController searchAction:]_block_invoke"
                   moduleName = "Yumfinder"
                   urlString = "file:///Volumes/GauravKeshre/Nimar/FL/iOS/YumFinder/Source/YumFinder/YumFinder/Source/Classes/Controllers/YMFHomeViewController.m"
-                  timestampString = "433355426.081319"
+                  timestampString = "433376532.007248"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "96"
@@ -203,13 +203,13 @@
                   offsetFromSymbolStart = "125">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "__38-[YMFHomeViewController searchAction:]_block_invoke_2"
                   moduleName = "Yumfinder"
                   urlString = "file:///Volumes/GauravKeshre/Nimar/FL/iOS/YumFinder/Source/YumFinder/YumFinder/Source/Classes/Controllers/YMFHomeViewController.m"
-                  timestampString = "433355426.081556"
+                  timestampString = "433376532.007597"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "96"
@@ -217,6 +217,54 @@
                   offsetFromSymbolStart = "43">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YumFinder/Source/Managers/FSResultManager/YMFFSquareResultManager.m"
+            timestampString = "433375811.800134"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "-parseResultFromArray:onSuccess:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YumFinder/Source/Managers/FSResultManager/YMFFSquareResultManager.m"
+            timestampString = "433376531.676762"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "-hashTagWithName:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YumFinder/Source/Managers/FSResultManager/YMFFSquareResultManager.m"
+            timestampString = "433376486.952995"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "-parseResultFromArray:onSuccess:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

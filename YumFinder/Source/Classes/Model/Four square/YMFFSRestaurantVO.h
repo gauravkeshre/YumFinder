@@ -22,6 +22,7 @@
 @property(nonatomic, copy)  NSString *venueID;
 @property(nonatomic, strong)NSString *venueName;
 @property(nonatomic, strong)NSString *referralId;
+@property(nonatomic, strong)NSArray *media;
 
 /*
  * Here Now

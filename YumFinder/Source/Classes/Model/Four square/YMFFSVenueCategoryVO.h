@@ -11,6 +11,8 @@
 @interface YMFFSVenueCategoryVO : YMFBaseVO
 
 @property BOOL isPrimary;
+@property(nonatomic, strong)NSString *categoryID;
+@property(nonatomic, strong)NSString *categoryName;
 @property(nonatomic, strong)NSString *pluralName;
 @property(nonatomic, strong)NSString *shortName;
 

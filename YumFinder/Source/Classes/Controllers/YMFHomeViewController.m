@@ -95,6 +95,10 @@
 
                                              [_weakSelf.fsResultManager parseResultFromArray:result onSuccess:^(id result) {
                                                  NSLog(@"%@",result);
+                                                 
+                                                 
+                                                 
+                                                 
                                              }];
                                              
                                              NSLog(@"%@", result);
