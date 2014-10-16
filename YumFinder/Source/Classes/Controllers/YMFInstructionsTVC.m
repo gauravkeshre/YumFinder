@@ -38,6 +38,7 @@
     self.tableView.contentSize =originalContentSize;
     
     [self prepareFloatingView];
+
 }
 
 - (void)didReceiveMemoryWarning

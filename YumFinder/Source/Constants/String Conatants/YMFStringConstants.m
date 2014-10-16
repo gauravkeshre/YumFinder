@@ -8,8 +8,8 @@
 
 #import "YMFStringConstants.h"
 
-NSString *const kUsername = @"username";
-NSString *const kPassword = @"password";
+NSString *const cUsername = @"username";
+NSString *const cPassword = @"password";
 
 #pragma mark - Messages Methods
 NSString *const msgConfirmLogout    = @"Are you sure you want to logout?";

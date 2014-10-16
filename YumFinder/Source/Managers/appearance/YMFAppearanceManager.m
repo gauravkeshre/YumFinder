@@ -11,10 +11,10 @@
 @implementation YMFAppearanceManager
 
 +(void)applyAppearance{
-    UIImage *textFieldBackground = [[UIImage imageNamed:@"bg_textField"]resizableImageWithCapInsets:UIEdgeInsetsMake(16.0, 29.f, 16.0, 30.f)];
+//    UIImage *textFieldBackground = [[UIImage imageNamed:@"bg_textField"]resizableImageWithCapInsets:UIEdgeInsetsMake(16.0, 29.f, 16.0, 30.f)];
     
-    [[UITextField appearance] setBackground:textFieldBackground];
-    [[UITextField appearance] setBorderStyle:UITextBorderStyleNone];
+//    [[UITextField appearance] setBackground:textFieldBackground];
+//    [[UITextField appearance] setBorderStyle:UITextBorderStyleNone];
     
     
     /*

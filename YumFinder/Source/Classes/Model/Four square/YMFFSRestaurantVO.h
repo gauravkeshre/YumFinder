@@ -2,7 +2,7 @@
 //  YMFFSRestaurantVO.h
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 9/25/14.
+//  Created by Summer Green on 9/25/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
@@ -14,12 +14,13 @@
 @interface YMFFSRestaurantVO : YMFBaseVO
 
 @property BOOL hasMenu;
-
+@property BOOL isFavorite;
 @property(nonatomic)NSUInteger tipCount;
 @property(nonatomic)NSUInteger checkinsCount;
 @property(nonatomic)NSUInteger usersCount;
 
 @property(nonatomic, copy)  NSString *venueID;
+@property(nonatomic, copy)  NSString *hashTag;
 @property(nonatomic, strong)NSString *venueName;
 @property(nonatomic, strong)NSString *referralId;
 @property(nonatomic, strong)NSArray *media;

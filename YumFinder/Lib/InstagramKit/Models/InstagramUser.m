@@ -23,6 +23,19 @@
 
 @interface InstagramUser()
 @property (nonatomic, strong) NSArray *recentMedia;
+
+@property (readwrite) NSString* username;
+@property (readwrite) NSString* fullName;
+@property (readwrite) NSURL* profilePictureURL;
+@property (readwrite) NSString* bio;
+@property (readwrite) NSURL* website;
+// Transient
+@property (readwrite) NSInteger mediaCount;
+@property (readwrite) NSInteger followsCount;
+@property (readwrite) NSInteger followedByCount;
+
+//@property (readwrite) NSArray *recentMedia;
+
 @end
 
 @implementation InstagramUser
@@ -49,6 +62,37 @@
     }
     return self;
 }
+#pragma mark - NSCOding Methods
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    self.username = [decoder decodeObjectForKey:@"username"];
+    self.fullName = [decoder decodeObjectForKey:@"fullName"];
+    self.bio = [decoder decodeObjectForKey:@"bio"];
+    self.profilePictureURL = [decoder decodeObjectForKey:@"profilePictureURL"];
+    self.mediaCount = [[decoder decodeObjectForKey:@"mediaCount"] integerValue];
+    self.followsCount = [[decoder decodeObjectForKey:@"followsCount"] integerValue];
+    self.followedByCount = [[decoder decodeObjectForKey:@"followedByCount"] integerValue];
+    self.recentMedia = [decoder decodeObjectForKey:@"recentMedia"];
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.username             forKey:@"username"];
+    [encoder encodeObject:self.fullName             forKey:@"fullName"];
+    [encoder encodeObject:self.bio                  forKey:@"bio"];
+    [encoder encodeObject:self.profilePictureURL    forKey:@"profilePictureURL"];
+    [encoder encodeObject:@(self.mediaCount)        forKey:@"mediaCount"];
+    [encoder encodeObject:@(self.followsCount)      forKey:@"followsCount"];
+    [encoder encodeObject:@(self.followedByCount)   forKey:@"followedByCount"];
+    [encoder encodeObject:self.recentMedia          forKey:@"recentMedia"];
+}
+
+
 
 - (void)loadCounts
 {

@@ -22,6 +22,12 @@
 #import "NLS_FourSquareApiKeys.h"
 #import "NLSActivityViewHUD.h"
 
+#define MR_SHORTHAND
+
+#define MR_LOGGING_ENABLED 1
+
+#import "CoreData+MagicalRecord.h"
+
 #import "Toast+UIView.h"
 #import "UIColor+AppTheme.h"
 #import "CMPopTipView+DMOS.h"
@@ -36,6 +42,14 @@
 
 #import "YMFAPIManager.h"
 #import "SVProgressHUD.h"
+#import "MRProgress.h"
+
+//#import "InstagramComment+NSCoding.h"
+//#import "InstagramMedia+NSCoding.h"
+//#import "InstagramUser+NSCoding.h"
+
+
+
 #endif
 
 //#define TitleTextForFailed @"You failed 3 attempts. You are no longer able to take this test. Please wait to be contacted by your supervisor."

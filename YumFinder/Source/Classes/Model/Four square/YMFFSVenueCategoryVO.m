@@ -2,7 +2,7 @@
 //  YMFFSVenueCategoryVO.m
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 9/25/14.
+//  Created by Summer Green on 9/25/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
@@ -23,8 +23,8 @@
     [category setSuffix:d[fsICON][fsSUFFIX]];
     return category;
 }
--(NSString *)iconURLWithSize:(CGFloat)size{
-    return [NSString stringWithFormat:@"%@%f%@", self.prefix, size, self.suffix];
+-(NSString *)iconURLWithSize:(NSUInteger)size{
+    return [NSString stringWithFormat:@"%@%lu%@", self.prefix, (unsigned long)size, self.suffix];
 }
 @end
 

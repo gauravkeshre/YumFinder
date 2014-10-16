@@ -25,7 +25,7 @@
 @class InstagramUser;
 @class InstagramComment;
 
-@interface InstagramMedia : InstagramModel
+@interface InstagramMedia : InstagramModel<NSCoding>
 
 @property (nonatomic, readonly) InstagramUser* user;
 @property (nonatomic, readonly) NSDate *createdDate;

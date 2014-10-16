@@ -23,7 +23,7 @@
 
 @class InstagramUser;
 
-@interface InstagramComment : InstagramModel
+@interface InstagramComment : InstagramModel<NSCoding>
 
 @property (nonatomic, strong) NSDate *createdDate;
 @property (nonatomic, strong) InstagramUser *user;

@@ -22,7 +22,7 @@
 
 #import "InstagramModel.h"
 
-@interface InstagramUser : InstagramModel
+@interface InstagramUser : InstagramModel<NSCoding>
 
 @property (readonly) NSString* username;
 @property (readonly) NSString* fullName;

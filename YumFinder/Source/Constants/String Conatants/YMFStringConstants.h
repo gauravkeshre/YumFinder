@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
-FOUNDATION_EXPORT NSString *const kUsername;
-FOUNDATION_EXPORT NSString *const kPassword;
+FOUNDATION_EXPORT NSString *const cUsername;
+FOUNDATION_EXPORT NSString *const cPassword;
 
 #pragma mark - Messages Methods
 FOUNDATION_EXPORT NSString *const msgConfirmLogout;

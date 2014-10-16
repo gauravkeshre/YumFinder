@@ -21,5 +21,5 @@
 +(UIColor *)appTextBlueColor;
 +(UIColor *)appTextGrayColor;
 +(UIColor *)appTextPlaceholderColor;
-
++(UIColor *)skinColor;
 @end

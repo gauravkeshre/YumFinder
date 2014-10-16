@@ -34,5 +34,24 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    self.createdDate = [decoder decodeObjectForKey:@"createdDate"];
+    self.user = [decoder decodeObjectForKey:@"user"];
+    self.text = [decoder decodeObjectForKey:@"text"];
+    return self;
+}
+
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.createdDate forKey:@"createdDate"];
+    [encoder encodeObject:self.user        forKey:@"user"];
+    [encoder encodeObject:self.text        forKey:@"text"];
+    
+}
 
 @end

@@ -2,7 +2,7 @@
 //  NLS_FourSquareApiKeys.h
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 9/22/14.
+//  Created by Summer Green on 9/22/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 #define fsMETA              @"meta"

@@ -111,7 +111,7 @@
  Cancels any executing image operation for the receiver, if one exists.
  */
 - (void)cancelImageRequestOperation;
-
+- (void)setDownloadProgressBlock:(void (^)(NSUInteger bytesRead, long long totalBytesRead,   long long totalBytesExpectedToRead))block;
 @end
 
 #pragma mark -

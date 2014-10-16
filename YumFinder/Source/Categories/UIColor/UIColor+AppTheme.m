@@ -49,4 +49,7 @@
         return UI_COLOR_WITH_RGB(115.f, 95.f, 138.f);
 
 }
++(UIColor *)skinColor{
+    return [UIColor colorWithPatternImage:[UIImage imageNamed:@"skin_square"]];
+}
 @end

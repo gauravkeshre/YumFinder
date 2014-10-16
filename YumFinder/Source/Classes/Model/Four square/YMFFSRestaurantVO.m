@@ -2,7 +2,7 @@
 //  YMFFSRestaurantVO.m
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 9/25/14.
+//  Created by Summer Green on 9/25/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
@@ -50,7 +50,7 @@
      */
     if(d[fsCATEGORIES] && [d[fsCATEGORIES] count]>0){
         NSMutableArray *_categories = [[NSMutableArray alloc]initWithCapacity:[d[fsCATEGORIES] count]];
-        for (NSInteger i=0; i<_categories.count; i++) {
+        for (NSInteger i=0; i<[d[fsCATEGORIES] count]; i++) {
             
             YMFFSVenueCategoryVO *aCategory = [YMFFSVenueCategoryVO initWithDictionary:d[fsCATEGORIES][i]];
             [_categories addObject:aCategory];

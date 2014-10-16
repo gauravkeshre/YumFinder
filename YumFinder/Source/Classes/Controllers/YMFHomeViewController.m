@@ -9,10 +9,15 @@
 #import "YMFHomeViewController.h"
 #import "YMFSearchLandingVC.h"
 #import "YMFFSquareResultManager.h"
+#import "YMFSearchResultCollectionVC.h"
+#import "NLSRootPageVC.h"
 
 @interface YMFHomeViewController ()<UITextFieldDelegate>
 {
 }
+@property (weak, nonatomic) IBOutlet UILabel *lblOptions;
+@property (weak, nonatomic) IBOutlet UILabel *lblInstructions;
+
 @property (weak, nonatomic) IBOutlet UIButton *btnLeftArrow;
 @property (weak, nonatomic) IBOutlet UITextField *txtCuisine;
 @property (weak, nonatomic) IBOutlet UITextField *txtRange;
@@ -22,10 +27,13 @@
 - (IBAction)handleRightArrow:(id)sender;
 - (IBAction)handleLeftSwipe:(UISwipeGestureRecognizer *)sender;
 - (IBAction)handleRightSwipe:(UISwipeGestureRecognizer *)sender;
+- (IBAction)handleSearchButton:(id)sender;
+
 
 @end
 
 @implementation YMFHomeViewController
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -33,6 +41,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
     // Do any additional setup after loading the view.
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 5)];
     leftView.backgroundColor = [UIColor clearColor];
@@ -45,8 +54,13 @@
     
     self.txtCuisine.leftView =leftView;
     self.txtRange.leftView = leftView2;
+
     leftView = nil;
     leftView2= nil;
+    
+    
+//    [self.lblInstructions tiltWithRadians:15.f];
+//    [self.lblOptions tiltWithRadians:-15.f];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -86,28 +100,25 @@
     if (self.fsResultManager ==nil) {
         self.fsResultManager = [YMFFSquareResultManager new];
     }
-    
+
     [YMFAPIManager startSearchForRestaurantsThatServe:self.txtCuisine.text
                                                within:[self.txtRange.text floatValue]
                                          onCompletion:^(id result) {
-                                             [SVProgressHUD showSuccessWithStatus:@"Got a list of restaurants"];
-                                             [SVProgressHUD showSuccessWithStatus:@"Parsing the list"];
+                                             [SVProgressHUD dismiss];
 
-                                             [_weakSelf.fsResultManager parseResultFromArray:result onSuccess:^(id result) {
-                                                 NSLog(@"%@",result);
-                                                 
-                                                 
-                                                 
-                                                 
+                                             [_weakSelf.fsResultManager parseResultFromArray:result onSuccess:^(id pResult) {                                                 
+                                                 [SVProgressHUD dismiss];
+                                                 [_weakSelf performSegueWithIdentifier:@"push_segue_searchresult" sender:pResult];
                                              }];
-                                             
-                                             NSLog(@"%@", result);
                                          } onFailure:^(NSString *error_code, NSString *message) {
                                              [SVProgressHUD showErrorWithStatus:message];
                                              NSLog(@"Error: %@", message);
                                          }];
 }
 
+-(void)fethInstagramInfoForFSVenues{
+    
+}
 
 #pragma mark - IBAction Methods
 - (IBAction)handleLeftArrow:(id)sender {
@@ -124,16 +135,22 @@
     [self searchAction:sender];
 }
 
+- (IBAction)handleSearchButton:(id)sender {
+        [self searchAction:sender];
+}
+
 
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
+{
+    [SVProgressHUD dismiss];
      if ([segue.identifier isEqualToString:@"push_segue_searchresult"]) {
-         YMFSearchLandingVC *srvc = (YMFSearchLandingVC *)segue.destinationViewController;
-         [srvc setSearchResults:sender];
-         
+         NLSRootPageVC *rootPageVC = (NLSRootPageVC *)segue.destinationViewController;
+         [rootPageVC setVenues:[sender mutableCopy]];
+//         YMFSearchResultCollectionVC *srvc = (YMFSearchResultCollectionVC *)segue.destinationViewController;
+//         [srvc setFoursquareArray:sender];
      }
  }
 

@@ -28,12 +28,41 @@
     NSMutableArray *mLikes;
     NSMutableArray *mComments;
 }
+@property (nonatomic, readwrite) InstagramUser* user;
+@property (nonatomic, readwrite) InstagramComment* caption;
+
+@property (nonatomic, readwrite) NSDate *createdDate;
+@property (nonatomic, readwrite) NSString* link;
+
+@property (nonatomic, readwrite) NSInteger likesCount;
+@property (nonatomic, readwrite) NSArray *likes;
+@property (nonatomic, readwrite) NSInteger commentCount;
+@property (nonatomic, readwrite) NSArray *comments;
+@property (nonatomic, readwrite) NSArray *tags;
+@property (nonatomic, readwrite) CLLocationCoordinate2D location;
+@property (nonatomic, readwrite) NSString* filter;
+@property (nonatomic, readwrite) NSDictionary* images;
+
+@property (nonatomic, readwrite) NSURL *thumbnailURL;
+@property (nonatomic, readwrite) CGSize thumbnailFrameSize;
+@property (nonatomic, readwrite) NSURL *lowResolutionImageURL;
+@property (nonatomic, readwrite) CGSize lowResolutionImageFrameSize;
+@property (nonatomic, readwrite) NSURL *standardResolutionImageURL;
+@property (nonatomic, readwrite) CGSize standardResolutionImageFrameSize;
+
+@property (nonatomic, readwrite) BOOL isVideo;
+@property (nonatomic, readwrite) NSURL *lowResolutionVideoURL;
+@property (nonatomic, readwrite) CGSize lowResolutionVideoFrameSize;
+@property (nonatomic, readwrite) NSURL *standardResolutionVideoURL;
+@property (nonatomic, readwrite) CGSize standardResolutionVideoFrameSize;
 @end
 
 @implementation InstagramMedia
 @synthesize likes = mLikes;
 @synthesize comments = mComments;
 
+
+#pragma mark - Lifecycle Methods
 - (id)initWithInfo:(NSDictionary *)info
 {
     self = [super initWithInfo:info];
@@ -99,6 +128,85 @@
     NSDictionary *standardResInfo = videosInfo[kStandardResolution];
     _standardResolutionVideoURL = [[NSURL alloc] initWithString:standardResInfo[kURL]];
     _standardResolutionVideoFrameSize = CGSizeMake([standardResInfo[kWidth] floatValue], [standardResInfo[kHeight] floatValue]);
+}
+
+
+#pragma mark - NSCoding Methods
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    CLLocationDegrees latitude = (CLLocationDegrees)[(NSNumber*)[decoder decodeObjectForKey:@"latitude"] doubleValue];
+    CLLocationDegrees longitude = (CLLocationDegrees)[(NSNumber*)[decoder decodeObjectForKey:@"longitude"] doubleValue];
+    CLLocationCoordinate2D decodedLocation= (CLLocationCoordinate2D) { latitude, longitude };
+    self.location = decodedLocation;
+    
+    self.createdDate = [decoder decodeObjectForKey:@"createdDate"];
+    self.link = [decoder decodeObjectForKey:@"link"];
+    self.likes = [decoder decodeObjectForKey:@"likes"];
+    self.likesCount = [[decoder decodeObjectForKey:@"likesCount"] integerValue];
+    self.commentCount = [[decoder decodeObjectForKey:@"commentCount"] integerValue];
+    self.comments = [decoder decodeObjectForKey:@"comments"];
+    
+    self.tags = [decoder decodeObjectForKey:@"comments"];
+    self.filter = [decoder decodeObjectForKey:@"filter"];
+    self.images = [decoder decodeObjectForKey:@"images"];
+    
+    self.thumbnailURL = [decoder decodeObjectForKey:@"thumbnailURL"];
+    self.thumbnailFrameSize = CGSizeFromString([decoder decodeObjectForKey:@"thumbnailFrameSize"]);
+    self.lowResolutionImageFrameSize = CGSizeFromString([decoder decodeObjectForKey:@"lowResolutionImageFrameSize"]);
+    
+    self.standardResolutionImageFrameSize = CGSizeFromString([decoder decodeObjectForKey:@"standardResolutionImageFrameSize"]);
+    
+    self.lowResolutionImageURL = [decoder decodeObjectForKey:@"lowResolutionImageURL"];
+    self.standardResolutionImageURL = [decoder decodeObjectForKey:@"standardResolutionImageURL"];
+    
+    self.user =[decoder decodeObjectForKey:@"user"];
+    self.caption =[decoder decodeObjectForKey:@"caption"];
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    NSNumber *latitude = [NSNumber numberWithDouble:self.location.latitude];
+    NSNumber *longitude = [NSNumber numberWithDouble:self.location.longitude];
+    [encoder encodeObject:latitude forKey:@"latitude"];
+    [encoder encodeObject:longitude forKey:@"longitude"];
+    
+    [encoder encodeObject:self.createdDate forKey:@"createdDate"];
+    
+    [encoder encodeObject:self.link         forKey:@"link"];
+    [encoder encodeObject:self.likes        forKey:@"likes"];
+    [encoder encodeObject:self.comments     forKey:@"comments"];
+    [encoder encodeObject:self.tags         forKey:@"comments"];
+    
+    [encoder encodeObject:@(self.likesCount)    forKey:@"likesCount"];
+    [encoder encodeObject:@(self.commentCount)  forKey:@"commentCount"];
+    
+    
+    [encoder encodeObject:self.tags forKey:@"comments"];
+    [encoder encodeObject:self.filter forKey:@"filter"];
+    [encoder encodeObject:self.images forKey:@"images"];
+    
+    [encoder encodeObject:self.thumbnailURL forKey:@"thumbnailURL"];
+    [encoder encodeObject:self.lowResolutionImageURL forKey:@"lowResolutionImageURL"];
+    [encoder encodeObject:self.standardResolutionImageURL forKey:@"standardResolutionImageURL"];
+    
+    
+    [encoder encodeObject:NSStringFromCGSize(self.thumbnailFrameSize)
+                   forKey:@"thumbnailFrameSize"];
+    
+    [encoder encodeObject:NSStringFromCGSize(self.lowResolutionImageFrameSize)
+                   forKey:@"lowResolutionImageFrameSize"];
+    
+    [encoder encodeObject:NSStringFromCGSize(self.standardResolutionImageFrameSize)
+                   forKey:@"standardResolutionImageFrameSize"];
+    
+    [encoder encodeObject:self.user forKey:@"user"];
+    [encoder encodeObject:self.caption forKey:@"caption"];
+    
 }
 
 @end

@@ -2,7 +2,7 @@
 //  YMFFSVenueCategoryVO.h
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 9/25/14.
+//  Created by Summer Green on 9/25/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
@@ -22,6 +22,6 @@
 @property(nonatomic, strong)NSString *prefix;
 @property(nonatomic, strong)NSString *suffix;
 
--(NSString *)iconURLWithSize:(CGFloat)size;
+-(NSString *)iconURLWithSize:(NSUInteger)size;
 
 @end

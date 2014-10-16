@@ -2,7 +2,7 @@
 //  YMFAPIManager.m
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 9/22/14.
+//  Created by Summer Green on 9/22/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
@@ -11,14 +11,15 @@
 #define kTEMP_URL @"http://www.json-generator.com/api/json/get/bOGPbRQyIy?indent=2"
 
 @interface YMFAPIManager(){
-    NLSLocationManager *locationManager;
+    
 }
-
+@property(nonatomic, strong)NLSLocationManager *locationManager;
 @property(nonatomic,readwrite,strong) BZFoursquare *foursquare;
 @property(nonatomic,strong) BZFoursquareRequest *request;
 
 -(void)cancelRequest;
 +(instancetype)sharedInstance;
++(CLLocation *)currentLocation;
 @end
 
 @implementation YMFAPIManager
@@ -37,7 +38,10 @@
     return sharedInstance;
 }
 
-
++(CLLocation *)currentLocation{
+    YMFAPIManager *__self = [YMFAPIManager sharedInstance];
+        return __self.locationManager.location;
+}
 -(instancetype)init{
     self = [super init];
     if (self) {
@@ -45,7 +49,7 @@
         _foursquare.version = FSVersion;
         _foursquare.locale = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
         _foursquare.sessionDelegate = self;
-        locationManager=[[NLSLocationManager alloc]initWithUpdateBlock:nil errorBlock:^(NSString *errorMessage) {
+        self.locationManager=[[NLSLocationManager alloc]initWithUpdateBlock:nil errorBlock:^(NSString *errorMessage) {
             NSLog(@"%@", errorMessage);
         }];
     }
@@ -63,7 +67,7 @@
 }
 
 #pragma mark - Private Methods
--(void)_startSearchForRestaurantsThatServe:(NSString *)cuisine
+-(void)startSearchForRestaurantsThatServe:(NSString *)cuisine
                                    within:(CGFloat)diameter
                              onCompletion:(YMF_SuccessCallback)successCallback
                                 onFailure:(YMF_FailureCallback)failureCallback{
@@ -72,8 +76,8 @@
     self.failureCallback = failureCallback;
     
     YMFAPIManager *__weak _weakSelf = self;
-    [locationManager startMonitoringLocationWithSuccessBlock:^(BOOL success, NSDictionary *location) {
-        [locationManager stopMonitoringLocation];
+    [self.locationManager startMonitoringLocationWithSuccessBlock:^(BOOL success, NSDictionary *location) {
+        [self.locationManager stopMonitoringLocation];
         NSLog(@"%@", location);
         
         NSString *latLng = [location stringWithCommaSeperatedLatLong]; //category method
@@ -86,7 +90,7 @@
     }];
 }
 //
--(void)startSearchForRestaurantsThatServe:(NSString *)cuisine
+-(void)__startSearchForRestaurantsThatServe:(NSString *)cuisine
                                     within:(CGFloat)diameter
                               onCompletion:(YMF_SuccessCallback)successCallback
                                 onFailure:(YMF_FailureCallback)failureCallback{
@@ -136,7 +140,7 @@
 }
 - (void)request:(BZFoursquareRequest *)request didFailWithError:(NSError *)error{
     NSLog(@"didFailWithError : %@", error);
-    if (self.failureCallback) {
+     if (self.failureCallback) {
          NSString *strCode = [NSString stringWithFormat:@"%li", (long)error.code];
         self.failureCallback(strCode, error.localizedDescription);
     }
