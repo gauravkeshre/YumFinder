@@ -8,7 +8,7 @@
 
 #import "YMFImagesFromHashtagOperation.h"
 #import "InstagramEngine.h"
-#import "YMFFSRestaurantVO.h"
+
 
 @interface YMFImagesFromHashtagOperation()
 @property(nonatomic, readwrite, strong)NSString *hashtag;

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface NLSPictureCVCell : UICollectionViewCell <NLSDataReceiverDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet MRCircularProgressView *activityIndicator;
+@property (weak, nonatomic) __block IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) __block IBOutlet MRCircularProgressView *activityIndicator;
 -(void)resetImages;
 @end

@@ -402,7 +402,7 @@ NSDateFormatter* df_local;
     return [NSDate dateWithTimeInterval: seconds sinceDate: self];
 }
 
-#pragma mark - Gaurav Additions Methods
+#pragma mark - Green Additions Methods
 /*
  * Source:
  */

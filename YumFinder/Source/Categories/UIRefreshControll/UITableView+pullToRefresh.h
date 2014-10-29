@@ -1,6 +1,6 @@
 //
 //  UITableView+pullToRefresh.h
-//  DiamondOffshore
+//  Yumfinder
 //
 //  Created by Hemanth on 7/21/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.

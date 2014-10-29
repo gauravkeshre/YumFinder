@@ -15,10 +15,6 @@ typedef void(^GKBlock)(BOOL b, id data);
 
 @interface NLSRootPageVC : UIPageViewController <UIPageViewControllerDataSource , UIPageViewControllerDelegate>
 
-@property(nonatomic, strong)NSMutableArray *venues;
+@property(nonatomic, strong)NSArray *venues;
 @property NSUInteger currentIndex;
-
--(void) session_invokeURL:(NSString *)serviceURL
-               withParams:(NSDictionary *)params
-                 callback:(GKBlock)callback;
 @end

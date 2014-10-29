@@ -168,7 +168,7 @@
 -(NSArray *)imagesForAnimation{
     NSMutableArray *arr = [NSMutableArray arrayWithCapacity:kTOTAL_FRAMES];
     for (NSInteger i=1; i<=kTOTAL_FRAMES; i++) {
-//        [arr addObject:[UIImage imageNamed:[NSString stringWithFormat:@"speakle-load-%li.png", (long)i]]];
+//        [arr addObject:[UIImage imageNamed:[NSString stringWithFormat:@"yumfinder-load-%li.png", (long)i]]];
     }
     return arr;
 }

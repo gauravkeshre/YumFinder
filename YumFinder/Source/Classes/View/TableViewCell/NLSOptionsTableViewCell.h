@@ -13,5 +13,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
 
 -(void)setData:(id)data;
--(void)setDistance:(unsigned long)distance;
+-(void)setDistance:(NSNumber *)distance;
 @end

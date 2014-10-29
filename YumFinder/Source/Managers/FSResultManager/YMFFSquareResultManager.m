@@ -9,42 +9,101 @@
 #import "YMFFSquareResultManager.h"
 
 #import "NSDictionary+YMF.h"
-#import "YMFFSRestaurantVO.h"
-#import "YMFFSAddressVO.h"
-#import "YMFFSLocationVO.h"
 #import "InstagramKit.h"
+#import "Venue.h"
+#import "Address.h"
+#import "VenueCategory.h"
+#import "VenueInstagramMedia.h"
+#import "Location.h"
 
 @implementation YMFFSquareResultManager
 
+//-(void)_parseResultFromArray:(NSArray *)array onSuccess:(YMF_SuccessCallback)callback{
+//        
+//    __block NSMutableArray *mArr = [[NSMutableArray alloc]init];
+//    [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+//        YMFFSRestaurantVO *venue = [YMFFSRestaurantVO initWithDictionary:obj];
+//        NSString *tag = [[self hashTagWithName:venue] firstObject];
+//        [venue setHashTag:tag];
+//        [mArr addObject:venue];
+//    }];
+//    if (callback) {
+//        callback(mArr);
+//    }
+//}
+
 -(void)parseResultFromArray:(NSArray *)array onSuccess:(YMF_SuccessCallback)callback{
-        
-    __block NSMutableArray *mArr = [[NSMutableArray alloc]init];
+    
+    [Venue truncateAll];
+
     [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-        YMFFSRestaurantVO *venue = [YMFFSRestaurantVO initWithDictionary:obj];
-        NSString *tag = [[self hashTagWithName:venue] firstObject];
-        [venue setHashTag:tag];
-        [mArr addObject:venue];
+        
+        Venue *moVenue = [Venue createEntity];
+        [moVenue prepareWithDictionary:obj];
+   
+      /*
+         * Category
+         */
+        
+        if(obj[fsCATEGORIES] && [obj[fsCATEGORIES] count]>0){
+            for (NSInteger i=0; i<[obj[fsCATEGORIES] count]; i++) {
+                VenueCategory *moCate = [VenueCategory createEntity];
+                [moCate prepareWithDictionary:obj[fsCATEGORIES][i]];
+                [moVenue addCategoriesObject:moCate];
+                [moCate setVenue:moVenue];
+            }
+        }
+        
+        /*
+         * Location
+         */
+        Location *moLoc = [Location createEntity];
+        [moLoc prepareWithDictionary:obj[fsLOCATION]];
+        [moLoc setVenue:moVenue];
+        [moVenue setLocation:moLoc];
+        
+        /*
+         * Address
+         */
+
+        Address *moAdd = [Address createEntity];
+        [moAdd prepareWithDictionary:obj[fsLOCATION]];
+        [moAdd setVenue:moVenue];
+        [moVenue setAddress:moAdd];
+
+        /*
+         * VenueInstagramMedia
+         */
+        VenueInstagramMedia *moInsta = [VenueInstagramMedia createEntity];
+        [moInsta setVenue:moVenue];
+        [moVenue setInstagramMedia:moInsta];
+
+        
+//        [mArr addObject:moVenue];
+        
+        
+//        moInsta = nil;
+//        moLoc = nil;
+//        moVenue = nil;
+//        moAdd = nil;
     }];
-    if (callback) {
-        callback(mArr);
-    }
-}
-
--(NSArray *)hashTagWithName:(YMFFSRestaurantVO * )venue{
     
-    NSCharacterSet *charactersToRemove = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        NSLog(@"data saved");
+        if (callback) {
+            callback(nil);
+        }
+    }];
 
-//    NSString *str2 = [[venue.venueName stringByReplacingOccurrencesOfString:@" " withString:@""] stringByTrimmingCharactersInSet:charactersToRemove];
-    NSString *trimmedReplacement = [[[venue.venueName stringByReplacingOccurrencesOfString:@" " withString:@""] componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
 
     
-    return @[trimmedReplacement];//[set allObjects];
 }
+
 
 
 
 #pragma mark - Instagram
--(void)fetchInstagramImagesForVenue:(YMFFSRestaurantVO *)venue
+-(void)fetchInstagramImagesForVenue:(Venue *)venue
                        withCallBack:(YMF_SuccessCallback)successCallback
                        onFailure:(YMF_SuccessCallback)failureBlock{
     if(venue.hashTag.length <1 ){
@@ -58,12 +117,23 @@
                                                   count:15
                                                   maxId:nil
                                             withSuccess:^(NSArray *media, InstagramPaginationInfo *paginationInfo) {
-                                                NSLog(@"Search Media for: %@ \n Media: %@", venue.hashTag,media);
-                                                venue.media = media;
-                                                successCallback(media);
+                                                [venue.instagramMedia setMediaArray:media];
+                                                [[NSManagedObjectContext defaultContext] saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+                                                    NSLog(@"data saved");
+                                                    successCallback(media);;
+                                                }];
+
                                             } failure:^(NSError *error) {
                                                 NSLog(@"Search Media Failed");
                                             }];
 }
 
+#pragma mark - Core Data Methods
+
+-(void)save{
+    // Save Managed Object Context
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        NSLog(@"data saved");
+    }];
+}
 @end

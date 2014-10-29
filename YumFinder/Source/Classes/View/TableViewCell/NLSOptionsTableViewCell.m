@@ -35,7 +35,8 @@
     
 }
 
--(void)setDistance:(unsigned long)distance{
+-(void)setDistance:(NSNumber *)d{
+    unsigned long distance = [d unsignedLongValue];
     NSString *unit ;
     if (distance==1) {
         unit = @"meter";

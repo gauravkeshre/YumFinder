@@ -3,7 +3,7 @@
 //  DMOS_temp
 //
 //  Created by Hemanth on 6/27/14.
-//  Copyright (c) 2014 Softway. All rights reserved.
+//  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
 #import "NSString+attributedString.h"

@@ -2,7 +2,7 @@
 //  VenueInstagramMedia.m
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 10/12/14.
+//  Created by Green Summer on 10/12/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 

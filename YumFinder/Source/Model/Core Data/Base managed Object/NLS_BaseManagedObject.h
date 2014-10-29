@@ -14,4 +14,6 @@
 + (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (NSString*)entityName;
 - (NSDictionary*) toDictionary;
++(instancetype)initWithDictionary:(NSDictionary *)d;
+-(void)prepareWithDictionary:(NSDictionary *)d;
 @end

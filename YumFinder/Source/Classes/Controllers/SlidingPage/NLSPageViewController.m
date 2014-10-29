@@ -6,20 +6,21 @@
 //  Copyright (c) 2014 Nimar Labs Solutions. All rights reserved.
 //
 
+#import <MapKit/MapKit.h>
 #import "NLSPageViewController.h"
 #import "NLSOptionsTableViewCell.h"
 #import "NLSPictureCVCell.h"
 #import "NLSRootPageVC.h"
-#import "YMFFSRestaurantVO.h"
-#import "YMFFSLocationVO.h"
-#import "YMFFSquareResultManager.h"
+
 #import "UIImageView+AFNetworking.h"
 #import "InstagramMedia.h"
-#import "YMFFSVenueCategoryVO.h"
+
+#import "YMFFSquareResultManager.h"
 #import "NLSLocationManager.h"
 #import "YMFAPIManager.h"
-#import <MapKit/MapKit.h>
+
 #import "Venue.h"
+#import "FavoriteVenue.h"
 #import "VenueCategory.h"
 #import "Address.h"
 #import "Location.h"
@@ -27,21 +28,17 @@
 
 @interface NLSPageViewController ()<UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (weak, nonatomic)YMFFSRestaurantVO *venueData;
+@property (weak, nonatomic)Venue *venueData;
 @property (strong, nonatomic) NSMutableArray *instagramImagesArray;
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet UIImageView *previewImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *categoryImageView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *imgCategoryIcon;
-@property (weak, nonatomic) IBOutlet MRCircularProgressView *circularProgressView;
 @property (weak, nonatomic) IBOutlet UILabel *lblVenueName;
-
 @property (weak, nonatomic) IBOutlet UIView *categoryContainerView;
-//- (IBAction)handlePreviewImageTap:(UITapGestureRecognizer *)sender;
+
 - (IBAction)handleBackButton:(id)sender;
 @end
 
@@ -51,8 +48,8 @@
     [super viewDidLoad];
     self.contentView.layer.shadowColor = [UIColor blackColor].CGColor;
     self.instagramImagesArray = [NSMutableArray array];
-    [self.activityIndicator setHidden:YES];
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -63,23 +60,21 @@
     self.collectionView.layer.borderWidth = 2.f;
     self.collectionView.layer.cornerRadius = 12.f;
     
-    
     /*
      * Reload Options TanleView
      */
     [self.tableView reloadData];
-    
+    [self.collectionView reloadData];
     
     UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_circle"]];
     [self.tableView setBackgroundView:imageView];
     imageView = nil;
     
-    
     /*
      * Add Category icon
      */
     
-    YMFFSVenueCategoryVO *category = [self.venueData.categories firstObject];
+    VenueCategory *category = (VenueCategory *)[[self.venueData categories] anyObject];
     if (category) {
         [self.categoryContainerView setHidden:NO];
         [self.imgCategoryIcon setImageWithURL:[NSURL URLWithString:[category iconURLWithSize:64]] placeholderImage:[UIImage imageNamed:@"quote"]];
@@ -90,83 +85,55 @@
     /*
      * Get the Images from instagram
      */
-    
-    if (self.venueData.media ==nil || self.venueData.media.count<1) {
+    NSArray *mediaArray = [self.venueData instagramMediaArray];
+    if (mediaArray.count<1) {
         
         NLSPageViewController *__weak _weakSelf = self;
         YMFFSquareResultManager *manager = [YMFFSquareResultManager new];
         
         [manager fetchInstagramImagesForVenue:self.venueData
                                  withCallBack:^(NSArray *result) {
-                                     [[_weakSelf venueData]setMedia:result];
+                                     
+                                     [_weakSelf.venueData.instagramMedia setMediaArray:result];
                                      [_weakSelf.instagramImagesArray removeAllObjects];
                                      [_weakSelf.instagramImagesArray addObjectsFromArray:result];
                                      [_weakSelf.collectionView reloadData];
+                                     
                                  } onFailure:nil];
+    }else{
+        [self.instagramImagesArray removeAllObjects];
+        [self.instagramImagesArray addObjectsFromArray:mediaArray];
+        [self.collectionView reloadData];
     }
-    
     self.lblVenueName.text = self.venueData.venueName;
-    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
 -(NSString *)description{
-    
     NSString *tagStr = [NSString stringWithFormat:@"%@ -- %lu", [super description], (unsigned long)self.tag];
     return tagStr;
 }
 #pragma mark - Conv Methods
-
 -(void)saveToFavorites{
-  /*
-    * VENUE
-    */
-    Venue *mVenue = [Venue createEntity];
-    [mVenue initializeFromObject:self.venueData];
     
-   /*
-     * INSTAGRAM MEDIA
-     */
-    VenueInstagramMedia *mMedia = [VenueInstagramMedia createEntity];
-//
-////    [mMedia setItem:self.venueData.media]  //Try this if the next line doesn't works
-    [mMedia setMediaArray:self.venueData.media];
-    [mMedia setVenue:mVenue];
-
-   /*
-     * Category
-     */
-    for (YMFFSVenueCategoryVO *cate in self.venueData.categories) {
-        VenueCategory *category = [VenueCategory createEntity];
-        [category setCategoryFrom:cate];
-        [category setVenue:mVenue]; //TODO: - set later
-        [mVenue addCategoriesObject:category];
-        
-    }
-    Address *mAddress = [Address createEntity];
-    [mAddress initializeFromObject:self.venueData.address];
-    [mAddress setVenue:mVenue];
-    
-    
-    Location *mLocation = [Location createEntity];
-    [mLocation initializeFromObject:self.venueData.location];
-    [mLocation setVenue:mVenue];
-    
-    
-    // Save Managed Object Context
+    BOOL alreadyFav = [self.venueData.isFavorite boolValue];
+    [self.venueData setIsFavorite:@(!alreadyFav)];
     [[NSManagedObjectContext defaultContext] saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        self.venueData.isFavorite = success && (error ==nil);
+        NSLog(@"Favorite toggled!");
+        [self.tableView reloadData];
     }];
+
+    
 }
 
 #pragma mark - NLSDataReceiverDelegate
--(void)setData:(id)_data{
+-(void)setData:(Venue *)_data{
+    [self.instagramImagesArray removeAllObjects];
     self.venueData = _data;
     
 }
@@ -183,12 +150,18 @@
     NLSOptionsTableViewCell *cell = (NLSOptionsTableViewCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     switch (indexPath.row) {
+        case 0:{
+            BOOL alreadyFav = [self.venueData.isFavorite boolValue];
+            NSString *strFav = (alreadyFav)? @"Remove from Favorites":@"Save to Favorites" ;
+            [cell.lblTitle setText:strFav];
+        }
+            break;
         case 1:{ //DISTANCE
             [cell setDistance:self.venueData.location.distance];
         }
             break;
         case 2:{ //WEBSITE
-             NSString *strHereNow = [NSString stringWithFormat:@"%lu people are here now...", self.venueData.countHereNow];
+             NSString *strHereNow = [NSString stringWithFormat:@"%lu people are here now...", [self.venueData.countHereNow integerValue]];
             [cell.lblTitle setText:strHereNow];
         }
             break;
@@ -252,8 +225,6 @@
         default:
             break;
     }
-    
-
 }
 
 
@@ -264,7 +235,7 @@
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     __block NLSPictureCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"NLSPictureCVCell" forIndexPath:indexPath];
-    InstagramMedia *media = (InstagramMedia *) self.venueData.media[indexPath.row];
+    InstagramMedia *media = (InstagramMedia *) self.instagramImagesArray[indexPath.row];
     [cell setData:media];
     return cell;
 }

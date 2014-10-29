@@ -150,7 +150,7 @@
     self.commentCount = [[decoder decodeObjectForKey:@"commentCount"] integerValue];
     self.comments = [decoder decodeObjectForKey:@"comments"];
     
-    self.tags = [decoder decodeObjectForKey:@"comments"];
+    self.tags = [decoder decodeObjectForKey:@"tags"];
     self.filter = [decoder decodeObjectForKey:@"filter"];
     self.images = [decoder decodeObjectForKey:@"images"];
     
@@ -180,13 +180,12 @@
     [encoder encodeObject:self.link         forKey:@"link"];
     [encoder encodeObject:self.likes        forKey:@"likes"];
     [encoder encodeObject:self.comments     forKey:@"comments"];
-    [encoder encodeObject:self.tags         forKey:@"comments"];
+    [encoder encodeObject:self.tags         forKey:@"tags"];
     
     [encoder encodeObject:@(self.likesCount)    forKey:@"likesCount"];
     [encoder encodeObject:@(self.commentCount)  forKey:@"commentCount"];
     
     
-    [encoder encodeObject:self.tags forKey:@"comments"];
     [encoder encodeObject:self.filter forKey:@"filter"];
     [encoder encodeObject:self.images forKey:@"images"];
     

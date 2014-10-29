@@ -9,6 +9,7 @@
 #import "YMFAPIManager.h"
 #import "NLSLocationManager.h"
 #define kTEMP_URL @"http://www.json-generator.com/api/json/get/bOGPbRQyIy?indent=2"
+#define METERFROMKM(km) km * 1000
 
 @interface YMFAPIManager(){
     
@@ -68,7 +69,7 @@
 
 #pragma mark - Private Methods
 -(void)startSearchForRestaurantsThatServe:(NSString *)cuisine
-                                   within:(CGFloat)diameter
+                                   within:(CGFloat)radiusInKM
                              onCompletion:(YMF_SuccessCallback)successCallback
                                 onFailure:(YMF_FailureCallback)failureCallback{
 
@@ -77,11 +78,13 @@
     
     YMFAPIManager *__weak _weakSelf = self;
     [self.locationManager startMonitoringLocationWithSuccessBlock:^(BOOL success, NSDictionary *location) {
-        [self.locationManager stopMonitoringLocation];
+//        [self.locationManager stopMonitoringLocation];
         NSLog(@"%@", location);
         
         NSString *latLng = [location stringWithCommaSeperatedLatLong]; //category method
-        NSDictionary *params = [NSDictionary foursquarParamsWithQuery:cuisine andLL:latLng]; //category method
+//        NSDictionary *params = [NSDictionary foursquarParamsWithQuery:cuisine andLL:latLng]; //category method
+        NSDictionary *params = [NSDictionary foursquarParamsWithQuery:cuisine
+                                                         withinRadius:@(METERFROMKM(radiusInKM)) andLL:latLng]; //category
         BZFoursquareRequest *request =  [_weakSelf.foursquare userlessRequestWithPath:@"venues/search"
                                                                       HTTPMethod:@"POST"
                                                                       parameters:params
@@ -89,29 +92,15 @@
         [request start];
     }];
 }
-//
--(void)__startSearchForRestaurantsThatServe:(NSString *)cuisine
-                                    within:(CGFloat)diameter
-                              onCompletion:(YMF_SuccessCallback)successCallback
-                                onFailure:(YMF_FailureCallback)failureCallback{
-    self.successCallback = nil;
-    self.failureCallback = nil;
-    
-    [self session_invokeURL:kTEMP_URL
-                 withParams:nil
-                   callback:successCallback
-            failureCallback:failureCallback];
-    
-}
 
 
 #pragma mark - Public Methods
 +(void)startSearchForRestaurantsThatServe:(NSString *)cuisine
-                                   within:(CGFloat)diameter
+                                   within:(CGFloat)radiusInKM
                              onCompletion:(YMF_SuccessCallback)successCallback
                                 onFailure:(YMF_FailureCallback)failureCallback{
     [[YMFAPIManager sharedInstance] startSearchForRestaurantsThatServe:cuisine
-                                                                within:diameter
+                                                                within:radiusInKM
                                                           onCompletion:successCallback
                                                              onFailure:failureCallback];
 }

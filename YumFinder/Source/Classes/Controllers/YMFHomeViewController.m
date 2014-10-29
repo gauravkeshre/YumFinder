@@ -90,6 +90,10 @@
 
 #pragma mark - Action Methods
 
+-(void)clearCachedResults{
+    
+}
+
 -(void)searchAction:(id)sender{
     if (![self validateInputeAndReact:YES]) return;
     
@@ -100,7 +104,6 @@
     if (self.fsResultManager ==nil) {
         self.fsResultManager = [YMFFSquareResultManager new];
     }
-
     [YMFAPIManager startSearchForRestaurantsThatServe:self.txtCuisine.text
                                                within:[self.txtRange.text floatValue]
                                          onCompletion:^(id result) {
@@ -108,7 +111,7 @@
 
                                              [_weakSelf.fsResultManager parseResultFromArray:result onSuccess:^(id pResult) {                                                 
                                                  [SVProgressHUD dismiss];
-                                                 [_weakSelf performSegueWithIdentifier:@"push_segue_searchresult" sender:pResult];
+                                                 [_weakSelf performSegueWithIdentifier:@"push_segue_searchresult" sender:nil];
                                              }];
                                          } onFailure:^(NSString *error_code, NSString *message) {
                                              [SVProgressHUD showErrorWithStatus:message];
@@ -116,9 +119,6 @@
                                          }];
 }
 
--(void)fethInstagramInfoForFSVenues{
-    
-}
 
 #pragma mark - IBAction Methods
 - (IBAction)handleLeftArrow:(id)sender {
@@ -148,9 +148,8 @@
     [SVProgressHUD dismiss];
      if ([segue.identifier isEqualToString:@"push_segue_searchresult"]) {
          NLSRootPageVC *rootPageVC = (NLSRootPageVC *)segue.destinationViewController;
-         [rootPageVC setVenues:[sender mutableCopy]];
-//         YMFSearchResultCollectionVC *srvc = (YMFSearchResultCollectionVC *)segue.destinationViewController;
-//         [srvc setFoursquareArray:sender];
+         [rootPageVC setCurrentIndex:0];
+         [rootPageVC setVenues:nil];
      }
  }
 

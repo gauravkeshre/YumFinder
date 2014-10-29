@@ -1,6 +1,6 @@
 //
 //  SWCoreDataStack.m
-//  DiamondOffshore
+//  Yumfinder
 //
 //  Created by Summer Green on 8/1/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
@@ -89,7 +89,7 @@
 
 - (NSURL*)storeURL{
     NSURL* documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
-    return [documentsDirectory URLByAppendingPathComponent:@"DiamondOffshore.sqlite"];
+    return [documentsDirectory URLByAppendingPathComponent:@"Yumfinder.sqlite"];
 }
 
 - (NSURL*)modelURL

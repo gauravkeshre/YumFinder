@@ -2,7 +2,7 @@
 //  YMFFavoriteCollectionVC.m
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 10/15/14.
+//  Created by Green Summer on 10/15/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
@@ -17,11 +17,9 @@
 @interface YMFFavoriteCollectionVC ()<UICollectionViewDataSource, UICollectionViewDelegate, YMFVenueHeaderDelegate>
 
 @property (nonatomic) CGFloat originalOrigin;
-
-@property (nonatomic, weak)UIView *floatingView;
+@property (weak, nonatomic) UIView *floatingView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property(nonatomic, strong)NSMutableArray *mArray;
-
+@property (strong, nonatomic) NSArray *mArray;
 @end
 
 @implementation YMFFavoriteCollectionVC
@@ -29,13 +27,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     CGFloat height = [[UIScreen mainScreen]bounds].size.height;
-    
     self.originalOrigin = height-70.f;
     [self fetchAllFavs];
     [self.collectionView reloadData];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,13 +43,18 @@
     [super viewDidAppear:animated];
     CGSize originalContentSize = self.collectionView.contentSize;
     self.collectionView.contentSize =originalContentSize;
-    
     [self prepareFloatingView];
 }
 #pragma mark - Data Methods
 - (void)fetchAllFavs {
 	// Determine if sort key is
-	self.mArray = [[Venue findAllSortedBy:nil ascending:YES] mutableCopy];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.isFavorite==1"];
+	self.mArray = [Venue findAllWithPredicate:predicate
+                                    inContext:[NSManagedObjectContext defaultContext]];
+    
+    
+    
+//    self.mArray = [Venue findAll];
 }
 
 
@@ -87,7 +87,6 @@
     v1 = nil;
     
     [self.collectionView reloadData];
-    
 }
 
 #pragma mark - IBAction Methods
@@ -114,7 +113,7 @@
     
     Venue *mVenue = (Venue *)self.mArray[section];
     NSUInteger mediaCount = [[mVenue instagramMediaArray] count];
-    return (section ==self.mArray.count)?1: fmin(4,mediaCount); //max 4 icons
+    return (section == self.mArray.count)?1: fmin(4,mediaCount); //max 4 icons
     
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -142,31 +141,30 @@
 }
 
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
+
     UICollectionReusableView *reusableview = nil;
-    
-    
+
     if (kind == UICollectionElementKindSectionHeader) {
         YMFVenueHeaderCVC *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"YMFVenueHeaderCVC" forIndexPath:indexPath];
-        
-        
         if (indexPath.section ==self.mArray.count) {
             [headerView.button setTitle:@"" forState:UIControlStateNormal];
         }else{
-            Venue *venue = (Venue *)self.mArray[indexPath.section];
-            
+            Venue *__weak venue = (Venue *)self.mArray[indexPath.section];
             NSString *finalTitle = [NSString stringWithFormat:@"%li. #%@", indexPath.section+1, venue.venueName];
             [headerView.button setTitle:finalTitle forState:UIControlStateNormal];
             [headerView setIndexPath:indexPath];
             [headerView setDelegate:self];
-            
         }
         reusableview = headerView;
-    }else if(kind == UICollectionElementKindSectionFooter && indexPath.section == self.mArray.count){
-        UICollectionViewCell *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-                                                                       withReuseIdentifier:@"YMFVenueFooter"
-                                                                              forIndexPath:indexPath];
-        reusableview = footer;
     }
+//    else if(kind == UICollectionElementKindSectionFooter){
+//        
+//        if (indexPath.section == self.mArray.count) {
+//            return  [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter                                                                              withReuseIdentifier:@"YMFVenueFooter"                                                                                     forIndexPath:indexPath];
+//        }else{
+//         //handle for
+//        }
+//    }
     return reusableview;
 }
 
@@ -174,24 +172,7 @@
     NSLog(@"did select called");
 }
 
-- (NSArray *)laysadasdasoutAttributesForElementsInRect:(CGRect)rect {
-    NSMutableArray *attributes = [NSMutableArray new];
-    
-    NSIndexPath *decorationIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-    
-    UICollectionViewLayoutAttributes *decorationAttributes =
-    
-    [UICollectionViewLayoutAttributes
-     layoutAttributesForDecorationViewOfKind:@"BackgroundView"
-     withIndexPath:decorationIndexPath];
-    
-    decorationAttributes.frame = CGRectMake(0.0f,
-                                            0.0f,
-                                            self.collectionView.contentSize.width,
-                                            self.collectionView.contentSize.height);
-    
-    return attributes;
-}
+
 - (CGSize)collectionViewContentSize
 {
     CGSize size = self.collectionView.contentSize;
@@ -209,7 +190,7 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NLSRootPageVC *pageRes = (NLSRootPageVC *)segue.destinationViewController;
+ //   NLSRootPageVC *pageRes = (NLSRootPageVC *)segue.destinationViewController;
 //    pageRes.venues = [self.mArray mutableCopy];
 //    pageRes.currentIndex = [sender integerValue];
 }

@@ -10,7 +10,7 @@
 
 @implementation UIColor (AppTheme)
 
-//hemanth
+//Green
 +(UIColor *)appDarkColor{
     return UI_COLOR_WITH_RGB(1.f, 4.f, 5.f);
 }

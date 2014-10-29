@@ -9,51 +9,50 @@
 #import "NLSRootPageVC.h"
 #import "NLSPageViewController.h"
 #import "UIViewController+Additions.h"
-#import "YMFFSRestaurantVO.h"
 #import "InstagramEngine.h"
 #import "YMFFSquareResultManager.h"
+#import "Venue.h"
+
 #define kQUEUE_SIZE 3
 
-@interface NLSRootPageVC ()
+@interface NLSRootPageVC ()<NLSActivityDelegate>
 {
     NSMutableArray *pageQueue;
     UIActivityIndicatorView *activityIndicator;
 }
+@property (nonatomic, strong)NLSActivityViewHUD * activity;
+@property BOOL forceReloadNextPage;
 @end
 @implementation NLSRootPageVC
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self setDelegate:self];
     [self setDataSource:self];
-    
-    self.currentIndex = 0;
     [self setBackgroundImage:[UIImage imageNamed:@"skin_square"]];
-    pageQueue = [[NSMutableArray alloc]initWithCapacity:kQUEUE_SIZE];
-    return;
-    
-//    NLSRootPageVC *__weak _weakSelf = self;
-    YMFFSquareResultManager *fsManager = [YMFFSquareResultManager new];
 
-    [self.venues enumerateObjectsUsingBlock:^(YMFFSRestaurantVO *venue, NSUInteger index, BOOL *stop){
+    self.venues = [Venue findAllSortedBy:nil ascending:YES];
+    
+    if (self.venues ==nil || self.venues.count<1) {
         
-        [fsManager fetchInstagramImagesForVenue:venue
-                                             withCallBack:^(id result) {
-                                                 venue.media = result;
-//                                                 [_weakSelf.collectionView reloadSections:[NSIndexSet indexSetWithIndex:index]];
-
-                                             } onFailure:^(id result) {
-                                                 
-                                             }];
-    }];
-
-    
-    
+        NLSActivityViewHUD * activity = [NLSActivityViewHUD activityOnView:self.view];
+        [activity showErrorWithMessage:@"No Venues Found !!"];
+        [activity setDelegate:self];
+        
+        return;
+    }
+    self.currentIndex = (self.currentIndex != NSNotFound)?self.currentIndex:0;
+    pageQueue = [[NSMutableArray alloc]initWithCapacity:kQUEUE_SIZE];
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if (self.venues ==nil || self.venues.count<1) {
+        NSLog(@"Error: No venues found");
+        return;
+    }
+    
     NLSRootPageVC *__weak _weakSelf = self;
     NLSPageViewController *page =(NLSPageViewController *) [self viewControllerAtIndex:self.currentIndex];
     page.data = [_weakSelf.venues firstObject];
@@ -64,70 +63,43 @@
                        completion:^(BOOL finished) {
                            NSLog(@"complete block");
                        }];
-
 }
--(void)__viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    
-    NLSRootPageVC *__weak _weakSelf = self;
-    NLSPageViewController *page =(NLSPageViewController *) [self viewControllerAtIndex:self.currentIndex];
-    page.data = _weakSelf.venues[(self.currentIndex==NSNotFound)?0:self.currentIndex];
-    [pageQueue addObject:page];
-    [_weakSelf setViewControllers:@[page]
-                        direction:UIPageViewControllerNavigationDirectionForward
-                         animated:YES
-                       completion:^(BOOL finished) {
-                           NSLog(@"complete block");
-                       }];
-    
-}
--(void)_viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    NLSRootPageVC *__weak _weakSelf = self;
 
-    [_weakSelf.venues removeAllObjects];
-                       [_weakSelf.venues addObjectsFromArray:self.venues];
-
-                       dispatch_async(dispatch_get_main_queue(), ^{
-                           [activityIndicator stopAnimating];
-                           [activityIndicator setHidden:YES];
-
-                           NLSPageViewController *page = [_weakSelf.storyboard instantiateViewControllerWithIdentifier:@"NLSPageViewController"];
-                           page.tag = 0;
-                           page.index =0;
-                           page.data = [_weakSelf.venues firstObject];
-                           [pageQueue addObject:page];
-                           [_weakSelf setViewControllers:@[page]
-                                               direction:UIPageViewControllerNavigationDirectionForward
-                                                animated:YES
-                                              completion:^(BOOL finished) {
-                                                  NSLog(@"complete block");
-                                              }];
-                       });
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark - Data Methods
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)preloadResults{
+    	self.venues = [[Venue findAllSortedBy:nil ascending:YES] mutableCopy];
 }
-*/
+
 #pragma mark - Conv Methods
+-(void)touchStatusBar:(NSNotification *)aNotif{
+    NSLog(@"Scroll To top");
+    [self scrollToPage:0 animated:YES];
+   
+}
+
+- (void)scrollToPage:(NSInteger)page animated:(BOOL)animated
+{
+    if (page != self.currentIndex) {
+        [self setViewControllers:@[[self viewControllerAtIndex:page]]
+                       direction:(page > self.currentIndex ?
+                                  UIPageViewControllerNavigationDirectionForward :
+                                  UIPageViewControllerNavigationDirectionReverse)
+                        animated:animated
+                      completion:nil];
+        self.currentIndex = page;
+        self.forceReloadNextPage = YES; // to override view controller automatic page cache
+    }
+}
 -(UIViewController *)viewControllerAtIndex:(NSUInteger)index{
     
     NSUInteger retIndex = index % kQUEUE_SIZE;
-    
-    
+    self.currentIndex=index;
     NSLog(@"looking for: %lu presented : %lu", (unsigned long)index, (unsigned long)retIndex);
     NLSPageViewController *pageVC = [[pageQueue filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NLSPageViewController *vc, NSDictionary *bindings) {
             return (vc.tag == retIndex);
@@ -159,7 +131,6 @@
 
 //AFTER
 -(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
-    NSLog(@"\n\n SETTING UP After VC");
     NSUInteger index = [(NLSPageViewController *)viewController index];
     if (index>= self.venues.count-1) return nil;
         index++;
@@ -184,52 +155,18 @@
     [page setIndex:index];
     [page setData:self.venues[index]];
     return page;
-
-
 }
-//#pragma mark - UIPageViewControllerDelegate Methods
-//-(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers{
-//
-//}
-//-(void)pageViewController:(UIPageViewController *)pageViewController
-//       didFinishAnimating:(BOOL)finished
-//  previousViewControllers:(NSArray *)previousViewControllers
-//      transitionCompleted:(BOOL)completed{
-//    if (completed && finished) {
-////        [(NLSPageViewController *)previousViewControllers setData:nil];
-//    }
-//}
 
+-(void)pageViewController:(UIPageViewController *)pageViewController
+       didFinishAnimating:(BOOL)finished
+  previousViewControllers:(NSArray *)previousViewControllers
+      transitionCompleted:(BOOL)completed{
+    NSLog(@"pageViewController - previousViewControllers");
+}
 
-#pragma mark - Network Methods
--(void) session_invokeURL:(NSString *)serviceURL
-               withParams:(NSDictionary *)params
-                 callback:(GKBlock)callback{
-    
-    //    NSLog(@"dataTask about to be killed: %@", self.dataTask);
-    //    [self.dataTask cancel];
-    //    self.dataTask = nil;
-    
-    NSLog(@"URL: %@", serviceURL);
-    NSURL *url = [NSURL URLWithString:serviceURL];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-       [urlRequest setHTTPMethod:@"GET"];
-    //    [urlRequest addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
-
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:urlRequest
-                                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                       if(error){
-                                                           callback(NO,[error userInfo][@"NSLocalizedDescription"]);
-                                                           return;
-                                                       }
-                                                       NSMutableDictionary *responsDic = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error]];
-                                                           callback(YES, responsDic[@"body"]);
-                                                   }];
-    [task resume];
-  }
-
+#pragma mark - NLSActivityDelegate
+-(void)activityView:(NLSActivityViewHUD *)view didTapOnRetryFromMode:(NLSActivityMode)mode{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end

@@ -64,7 +64,7 @@ NSString *const msgInvalidSearchKeyword = @"Please enter atleast 2 characters to
 
 #pragma mark - Notifications
 NSString *const msgNoNotificationAvailable = @"No notifications found";
-
+NSString *const kStatusBarTouchedNotification  = @"NOTIF:STATUSBARTAP";
 
 #pragma mark - latest Activity
 NSString *const msgNoLatestActivityAvailable = @"No recent activity found";
@@ -123,7 +123,7 @@ NSString *const msgEmptyPhoneNumber      = @"Phone number cannot be empty.";
 
 
 #pragma mark - Feedback
-NSString *const msgFeedbackEmail     = @"admin@dmos.com";
+NSString *const msgFeedbackEmail     = @"admin@yumfinder.com";
 NSString *const msgFeedbackSubject   = @"Comments/Feedback";
 NSString *const msgFeedbackBody      = @"If you have any concerns or feedback while using this application, please feel free to send us an email about the matter here.";
 
@@ -169,3 +169,7 @@ NSString * const msgErrorNetwork            =@"Please check your network connect
 NSString * const msgErrorDenied             =@"User has denied to use current Location.";
 NSString * const msgErrorHeadingFailure     =@"The heading could not be determined.";
 
+#pragma mark - Predicates Methods
+
+NSString *const predAllNotFavs =@"SELF.isFavorite==nil OR SELF.isFavorite==0";
+NSString *const predAllFavs =@"SELF.isFavorite==1";

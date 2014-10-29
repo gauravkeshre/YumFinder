@@ -2,8 +2,8 @@
 //  NSString+TimeInString.h
 //  DMOS_temp
 //
-//  Created by Sugeet on 08/07/14.
-//  Copyright (c) 2014 Softway. All rights reserved.
+//  Created by Green on 08/07/14.
+//  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

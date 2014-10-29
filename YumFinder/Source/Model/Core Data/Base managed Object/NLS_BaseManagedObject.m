@@ -86,4 +86,7 @@
     
     return dict;
 }
++(instancetype)initWithDictionary:(NSDictionary *)d{
+    return nil;
+}
 @end

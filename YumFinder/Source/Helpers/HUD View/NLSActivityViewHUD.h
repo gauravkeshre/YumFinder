@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, NLSActivityMode){
     NLSActivityModeOnlyIconWithMessage,
 };
 
-@protocol SWActivityDelegate <NSObject>
+@protocol NLSActivityDelegate <NSObject>
 
 -(void)activityView:(NLSActivityViewHUD *)view didTapOnRetryFromMode:(NLSActivityMode)mode;
 
@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, NLSActivityMode){
 @property (weak, nonatomic) IBOutlet UIButton *btnTapToReload;
 @property (weak, nonatomic) IBOutlet UIImageView *animatedIcon;
 
-@property (weak, nonatomic)id<SWActivityDelegate> delegate;
+@property (weak, nonatomic)id<NLSActivityDelegate> delegate;
 @property(nonatomic)NLSActivityMode activityMode;
 
 

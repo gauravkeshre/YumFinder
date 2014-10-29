@@ -1,6 +1,6 @@
 //
 //  NSMutableDictionary+Additions.h
-//  DiamondOffshore
+//  Yumfinder
 //
 //  Created by Summer Green on 8/19/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.

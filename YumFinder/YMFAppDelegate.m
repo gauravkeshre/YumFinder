@@ -46,5 +46,13 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+#pragma mark - Status Bar Touch Methods
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [super touchesBegan:touches withEvent:event];
+    CGPoint location = [[[event allTouches] anyObject] locationInView:self.window];
+	if(location.y > 0 && location.y < 20) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kStatusBarTouchedNotification object:nil];
+	}
+}
 
 @end

@@ -20,13 +20,20 @@
 }
 
 +(instancetype)foursquarParamsWithQuery:(NSString *)query andLL:(NSString *)latLng{
+    return [[self class]foursquarParamsWithQuery:query
+                                    withinRadius:0
+                                           andLL:nil];
+}
++(instancetype)foursquarParamsWithQuery:(NSString *)query withinRadius:(NSNumber*)radius andLL:(NSString *)latLng {
+    NSString *strRadius = [NSString stringWithFormat:@"%f", [radius floatValue]];
     return  @{
     @"client_id":FSClientID,
     @"client_secret":FSClientSecret,
     @"query":query,
     @"ll":latLng,
     @"m":@"foursquare",
-    @"v":@"20140806"
+    @"v":@"20140806",
+    @"radius":strRadius
     };
 }
 

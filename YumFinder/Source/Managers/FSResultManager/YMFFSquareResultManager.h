@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import "YMFFSRestaurantVO.h"
-@class YMFFSRestaurantVO;
+
+@class Venue;
 
 @interface YMFFSquareResultManager : NSObject
 
@@ -16,7 +16,7 @@
 
 #pragma mark - Instagram
 
--(void)fetchInstagramImagesForVenue:(YMFFSRestaurantVO *)venue
+-(void)fetchInstagramImagesForVenue:(Venue *)venue
                        withCallBack:(YMF_SuccessCallback)successCallback
                           onFailure:(YMF_SuccessCallback)failureBlock;
 @end

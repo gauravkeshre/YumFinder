@@ -15,6 +15,7 @@
  */
 
 +(instancetype)foursquarParamsWithQuery:(NSString *)query andLL:(NSString *)latLng;
++(instancetype)foursquarParamsWithQuery:(NSString *)query withinRadius:(NSNumber*)radius andLL:(NSString *)latLng;
 
 -(NSString *)stringWithCommaSeperatedLatLong;
 

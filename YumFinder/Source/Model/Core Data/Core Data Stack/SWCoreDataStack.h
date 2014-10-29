@@ -1,6 +1,6 @@
 //
 //  SWCoreDataStack.h
-//  DiamondOffshore
+//  Yumfinder
 //
 //  Created by Summer Green on 8/1/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.

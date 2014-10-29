@@ -60,7 +60,7 @@ FOUNDATION_EXPORT NSString *const msgInvalidSearchKeyword ;
 
 #pragma mark - Notifications
 FOUNDATION_EXPORT NSString *const msgNoNotificationAvailable;
-
+FOUNDATION_EXPORT NSString *const kStatusBarTouchedNotification;
 
 #pragma mark - latest Activity
 FOUNDATION_EXPORT NSString *const msgNoLatestActivityAvailable;
@@ -168,3 +168,8 @@ FOUNDATION_EXPORT NSString * const msgErrorHeadingFailure;
 
 #pragma mark - HUD Methods
 FOUNDATION_EXPORT NSString *const msgPleaseWait;
+
+
+#pragma mark - PREDICATES Methods
+FOUNDATION_EXPORT NSString *const predAllNotFavs;
+FOUNDATION_EXPORT NSString *const predAllFavs;

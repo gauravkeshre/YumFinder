@@ -2,13 +2,13 @@
 //  VenueCategory.m
 //  YumFinder
 //
-//  Created by Gaurav Keshre on 10/12/14.
+//  Created by Green Summer on 10/12/14.
 //  Copyright (c) 2014 Nimar Labs. All rights reserved.
 //
 
 #import "VenueCategory.h"
 #import "Venue.h"
-#import "YMFFSVenueCategoryVO.h"
+
 
 
 @implementation VenueCategory
@@ -20,12 +20,21 @@
 @dynamic shortName;
 @dynamic suffix;
 @dynamic venue;
+@dynamic isPrimary;
 
--(void)setCategoryFrom:(YMFFSVenueCategoryVO *) category{
-    self.categoryID = category.categoryID;
-    self.categoryName = category.categoryName;
-    self.prefix = category.prefix;
-    self.shortName =category.shortName;
-    self.suffix = category.suffix;
+-(void)prepareWithDictionary:(NSDictionary *)d{
+    
+    [self setPluralName:d[fsPLURALNAME]];
+    [self setIsPrimary:@([d[fsPRIMARY] boolValue])];
+    [self setCategoryID:d[fsID]];
+    [self setShortName:d[fsSHORTNAME]];
+    [self setCategoryName:d[fsNAME]];
+    [self setPrefix:d[fsICON][fsPREFIX]];
+    [self setSuffix:d[fsICON][fsSUFFIX]];
 }
+
+-(NSString *)iconURLWithSize:(NSUInteger)size{
+    return [NSString stringWithFormat:@"%@%lu%@", self.prefix, (unsigned long)size, self.suffix];
+}
+
 @end
