@@ -94,7 +94,7 @@
 
 - (NSURL*)modelURL
 {
-    return [[NSBundle mainBundle] URLForResource:@"DiamondOffshore" withExtension:@"momd"];
+    return [[NSBundle mainBundle] URLForResource:@"Yumfinder" withExtension:@"momd"];
 }
 
 -(void)clean{
